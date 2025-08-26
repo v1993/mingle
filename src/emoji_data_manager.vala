@@ -18,19 +18,17 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-using Json, Soup, Gee;
-
 namespace Mingle {
     public class EmojiDataManager {
         private Json.Object data_object;
         private Json.Array supported_emojis;
-        public HashSet<string> added_combinations;
+        public Gee.HashSet<string> added_combinations;
         private Gee.HashMap<string, EmojiData?> emoji_data_map;
 
         public async EmojiDataManager () {
             supported_emojis = populate_supported_emojis_array ();
             emoji_data_map = new Gee.HashMap<string, EmojiData?> ();
-            added_combinations = new HashSet<string> ();
+            added_combinations = new Gee.HashSet<string> ();
         }
 
         private Json.Array populate_supported_emojis_array () {
@@ -58,7 +56,7 @@ namespace Mingle {
             if (supported_emojis == null)
                 supported_emojis = populate_supported_emojis_array ();
 
-            ArrayForeach array_foreach_func = (array, index_, element_node) => {
+            Json.ArrayForeach array_foreach_func = (array, index_, element_node) => {
                 if (element_node.get_node_type () == Json.NodeType.VALUE) {
                     string emoji_code = element_node.get_string ();
                     add_emoji_to_flowbox (emoji_code, flowbox);
